@@ -1,0 +1,143 @@
+﻿@page "/lista"
+<h3>Lista de Elementos</h3>
+
+<input @bind="nuevoElemento" placeholder="Nuevo elemento" />
+<input @bind="datoX" placeholder="Dato X" />
+
+<button @onclick="AgregarAlInicio">Agregar al Inicio</button>
+<button @onclick="AgregarAlFinal">Agregar al Final</button>
+<button @onclick="AgregarAntesDeX">Agregar antes de X</button>
+<button @onclick="AgregarDespuesDeX">Agregar después de X</button>
+<button @onclick="AgregarEnPosicion">Agregar en Posición</button>
+<button @onclick="AgregarAntesDePosicion">Agregar antes de Posición</button>
+<button @onclick="AgregarDespuesDePosicion">Agregar después de Posición</button>
+<button @onclick="RecorrerLista">Recorrer Lista</button>
+<button @onclick="BuscarElemento">Buscar Elemento</button>
+
+<ul>
+    @foreach (var elemento in lista)
+    {
+        <li>@elemento</li>
+    }
+</ul>
+
+
+<h2>Recorrido de la lista</h2>
+<ul>
+    @foreach (var elemento in ListaRecorrida)
+    {
+        <li>@elemento</li>
+    }
+</ul>
+
+<h2>Elemento encontrado</h2>
+<p>
+    @elementoEncontrado
+</p>
+
+@code {
+    private List<string> lista = new List<string>();
+    private string nuevoElemento;
+    private string datoX;
+    private List<string> ListaRecorrida = new List<string>();
+    private string elementoEncontrado;
+    private int posicion;
+
+    private void AgregarAlInicio()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento))
+        {
+            lista.Insert(0, nuevoElemento);
+            nuevoElemento = string.Empty;
+        }
+    }
+
+    private void AgregarAlFinal()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento))
+        {
+            lista.Add(nuevoElemento);
+            nuevoElemento = string.Empty;
+        }
+    }
+
+    private void AgregarAntesDeX()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento) && !string.IsNullOrEmpty(datoX))
+        {
+            int indice = lista.IndexOf(datoX);
+            if (indice != -1)
+            {
+                lista.Insert(indice, nuevoElemento);
+                nuevoElemento = string.Empty;
+            }
+        }
+    }
+
+    private void AgregarDespuesDeX()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento) && !string.IsNullOrEmpty(datoX))
+        {
+            int indice = lista.IndexOf(datoX);
+            if (indice != -1)
+            {
+                lista.Insert(indice + 1, nuevoElemento);
+                nuevoElemento = string.Empty;
+            }
+        }
+    }
+
+    private void AgregarEnPosicion()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento) && posicion >= 0 && posicion <= lista.Count)
+        {
+            lista.Insert(posicion, nuevoElemento);
+            nuevoElemento = string.Empty;
+        }
+    }
+
+    private void AgregarAntesDePosicion()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento) && posicion > 0 && posicion <= lista.Count)
+        {
+            lista.Insert(posicion - 1, nuevoElemento);
+            nuevoElemento = string.Empty;
+        }
+    }
+
+    private void AgregarDespuesDePosicion()
+    {
+        if (!string.IsNullOrEmpty(nuevoElemento) && posicion >= 0 && posicion < lista.Count)
+        {
+            lista.Insert(posicion + 1, nuevoElemento);
+            nuevoElemento = string.Empty;
+        }
+    }
+
+    private void RecorrerLista()
+    {
+        foreach (var elemento in lista)
+        {
+            Console.WriteLine(elemento);
+            ListaRecorrida.Add(elemento);
+        }
+    }
+
+    private void BuscarElemento()
+    {
+        if (!string.IsNullOrEmpty(datoX))
+        {
+            bool encontrado = lista.Contains(datoX);
+            if (encontrado)
+            {
+                Console.WriteLine($"El elemento {datoX} fue encontrado.");
+                elementoEncontrado = $"El elemento {datoX} fue encontrado.";
+            }
+            else
+            {
+                Console.WriteLine($"El elemento {datoX} no fue encontrado.");
+                elementoEncontrado = $"El elemento {datoX} no fue encontrado.";
+            }
+        }
+    }
+}
