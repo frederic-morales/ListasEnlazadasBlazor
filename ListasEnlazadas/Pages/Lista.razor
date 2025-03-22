@@ -3,7 +3,7 @@
 
 <input @bind="nuevoElemento" placeholder="Nuevo elemento" />
 <input @bind="datoX" placeholder="Dato X" />
-<input @bind="posicion"  placeholder="Posición" />
+<input @bind="posicion" type="number" placeholder="Posición" />
 
 <button @onclick="AgregarAlInicio">Agregar al Inicio</button>
 <button @onclick="AgregarAlFinal">Agregar al Final</button>
@@ -21,7 +21,6 @@
         <li>@elemento</li>
     }
 </ul>
-
 
 <h2>Recorrido de la lista</h2>
 <ul>
@@ -90,36 +89,39 @@
 
     private void AgregarEnPosicion()
     {
-        if (!string.IsNullOrEmpty(nuevoElemento) && posicion >= 0 && posicion <= lista.Count)
+        int index = posicion - 1;
+        if (!string.IsNullOrEmpty(nuevoElemento) && index >= 0 && index <= lista.Count)
         {
-            lista.Insert(posicion, nuevoElemento);
+            lista.Insert(index, nuevoElemento);
             nuevoElemento = string.Empty;
         }
     }
 
     private void AgregarAntesDePosicion()
     {
-        if (!string.IsNullOrEmpty(nuevoElemento) && posicion > 0 && posicion <= lista.Count)
+        int index = posicion - 1;
+        if (!string.IsNullOrEmpty(nuevoElemento) && index > 0 && index <= lista.Count)
         {
-            lista.Insert(posicion - 1, nuevoElemento);
+            lista.Insert(index - 1, nuevoElemento);
             nuevoElemento = string.Empty;
         }
     }
 
     private void AgregarDespuesDePosicion()
     {
-        if (!string.IsNullOrEmpty(nuevoElemento) && posicion >= 0 && posicion < lista.Count)
+        int index = posicion - 1;
+        if (!string.IsNullOrEmpty(nuevoElemento) && index >= 0 && index < lista.Count)
         {
-            lista.Insert(posicion + 1, nuevoElemento);
+            lista.Insert(index + 1, nuevoElemento);
             nuevoElemento = string.Empty;
         }
     }
 
     private void RecorrerLista()
     {
+        ListaRecorrida.Clear();
         foreach (var elemento in lista)
         {
-            Console.WriteLine(elemento);
             ListaRecorrida.Add(elemento);
         }
     }
@@ -128,15 +130,13 @@
     {
         if (!string.IsNullOrEmpty(datoX))
         {
-            bool encontrado = lista.Contains(datoX);
-            if (encontrado)
+            int indice = lista.IndexOf(datoX);
+            if (indice != -1)
             {
-                Console.WriteLine($"El elemento {datoX} fue encontrado.");
-                elementoEncontrado = $"El elemento {datoX} fue encontrado.";
+                elementoEncontrado = $"El elemento {datoX} fue encontrado en la posición {indice + 1}.";
             }
             else
             {
-                Console.WriteLine($"El elemento {datoX} no fue encontrado.");
                 elementoEncontrado = $"El elemento {datoX} no fue encontrado.";
             }
         }
