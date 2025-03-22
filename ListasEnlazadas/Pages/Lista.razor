@@ -1,10 +1,48 @@
 ﻿@page "/lista"
+
+<style type="text/css">
+    /* ESTILOS AGREGADOS */
+    .container-element {
+        display: flex;
+        justify-items: center;
+        /* align-items: center; */
+        width: 100%;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+        .container-element .lista {
+            width: 30%;
+        }
+
+        .container-element .lista p{
+            font-weight: bold;
+        }
+
+        .container-element .recorrido {
+            width: 30%;
+        }
+
+        .container-element .recorrido p{
+            font-weight: bold;
+        }
+
+        .container-element .busqueda {
+            width: 30%;
+        }
+
+        .container-element .busqueda p{
+            font-weight: bold;
+        }
+
+</style>
+
 <h3>Lista de Elementos</h3>
 
 <input @bind="nuevoElemento" placeholder="Nuevo elemento" />
 <input @bind="datoX" placeholder="Dato X" />
 <input @bind="posicion" type="number" placeholder="Posición" />
-
+<br />
 <button @onclick="AgregarAlInicio">Agregar al Inicio</button>
 <button @onclick="AgregarAlFinal">Agregar al Final</button>
 <button @onclick="AgregarAntesDeX">Agregar antes de X</button>
@@ -15,25 +53,36 @@
 <button @onclick="RecorrerLista">Recorrer Lista</button>
 <button @onclick="BuscarElemento">Buscar Elemento</button>
 
-<ul>
-    @foreach (var elemento in lista)
-    {
-        <li>@elemento</li>
-    }
-</ul>
+<div class="container-element">
+    <div class="lista">
+        <p>Lista</p>
+        <ul >
+            @foreach (var elemento in lista)
+            {
+                <li>@elemento</li>
+            }
+        </ul>
+   </div>
 
-<h2>Recorrido de la lista</h2>
-<ul>
-    @foreach (var elemento in ListaRecorrida)
-    {
-        <li>@elemento</li>
-    }
-</ul>
+    <div class="recorrido">
+        <p>Recorrido de la lista</p>
+        <ul>
+            @foreach (var elemento in ListaRecorrida)
+            {
+                <li>@elemento</li>
+            }
+        </ul>
+    </div>
 
-<h2>Elemento encontrado</h2>
-<p>
-    @elementoEncontrado
-</p>
+    <div class="busqueda">
+        <p class="">Elemento encontrado</p>
+        <p>
+            @elementoEncontrado
+        </p>
+    </div>
+</div>
+
+
 
 @code {
     private List<string> lista = new List<string>();
